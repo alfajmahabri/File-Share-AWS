@@ -1,0 +1,88 @@
+body{
+    background-color: #121212;
+    color:white;
+    font-family:'JetBrains Mono';
+    text-align: center;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    margin-top: 50px;
+}
+
+.box{
+    background-color: #1E1E1E;
+    padding: 20px;
+    border-radius: 20px;
+    width: 250px;
+    height: 250px;
+}
+
+.headings{
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+button{
+    width: 70%;
+    margin-top: 20px;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: large;
+    font-family: 'JetBrains Mono';
+    cursor: pointer;
+}
+
+#sendbtn{
+    background-color: #E6324B;
+    color: white;
+}
+
+#dowanloadbtn{
+    background-color: #00C853;
+    color: white;
+}
+
+#fileInput{
+    background-color: #1E1E1E;
+    border:3px solid;
+    border-color: #BB86FC;
+    width: 80%;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#fileInput::file-selector-button{
+    background-color: #BB86FC;
+    color: white;
+    border: none;
+    font-family: 'JetBrains Mono';
+    padding: 4 px;
+    border-radius: 3px;
+}
+
+.pin-input {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 10px 0;
+
+}
+
+.pin-input input {
+    width: 30px;
+    height: 40px;
+    font-size: 24px;
+    text-align: center;
+    border: 3px solid #BB86FC;
+    border-radius: 5px;
+    background: transparent;
+    font-family: 'JetBrains Mono';
+    color: white;
+}
+
