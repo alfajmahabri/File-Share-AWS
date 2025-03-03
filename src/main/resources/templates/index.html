@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Share</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<h1>File Share</h1>
+<div class="container">
+
+    <div class = "box">
+        <h2 class="headings">SEND FILE</h2>
+        <input type="file" id="fileInput">
+        <div id="generatedPin"></div>
+        <button id="sendbtn" onclick="uploadFile()">Send File</button>
+    </div>
+
+    <div class = "box">
+        <h2 class="headings">RECEIVE FILE</h2>
+        <div class="pin-input">
+            <input type="text" maxlength="1">
+            <input type="text" maxlength="1">
+            <input type="text" maxlength="1">
+            <input type="text" maxlength="1">
+        </div>
+        <div id="filestatus"></div>
+        <button id="dowanloadbtn" onclick="downloadFile()">Download File</button>
+    </div>
+
+</div>
+<script th:src="@{/script.js}" defer></script>
+</body>
+</html>
