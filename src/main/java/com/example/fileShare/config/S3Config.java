@@ -17,6 +17,7 @@ public class S3Config {
     @Value("${aws.region}")
     private String regionName;
 
+    /* for local machine
     @Value("${aws.accessKeyId}")
     private String access;
 
@@ -24,6 +25,8 @@ public class S3Config {
     private String secret;
 
     /*
+        For EC2 auto generated credentials
+     */
     @Bean
     public S3Presigner s3Presigner() {
         return S3Presigner.builder()
@@ -42,8 +45,9 @@ public class S3Config {
                 .build();
     }
 
-     */
 
+
+    /* for testing from local machine
     @Bean
     public S3Client client(){
         AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(access,secret);
@@ -63,5 +67,7 @@ public class S3Config {
                 .build();
 
     }
+
+     */
 
 }
