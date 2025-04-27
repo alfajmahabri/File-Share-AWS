@@ -1,5 +1,8 @@
 package com.example.fileShare.service;
 
+import com.example.fileShare.model.DownloadResponse;
+import com.example.fileShare.model.FileData;
+import com.example.fileShare.repository.FileDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
@@ -24,10 +27,13 @@ public class S3DownloadService {
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
-    public Resource generatePresignedUrl(String key) {
+    @Autowired
+    private FileDataRepository fileDataRepository;
+
+    public DownloadResponse generatePresignedUrl(String key) {
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                 .bucket(bucketName)
-                .key(key + ".pdf")
+                .key(key)
                 .build();
 
         GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
@@ -37,8 +43,11 @@ public class S3DownloadService {
 
         try {
             String presignedUrl = presigner.presignGetObject(presignRequest).url().toString();
-            return new UrlResource(presignedUrl);
-        } catch (MalformedURLException e) {
+            FileData fileData = fileDataRepository.findByPin(Long.parseLong(key));
+            String filename = fileData.getFilename();
+            String extension = fileData.getExtension();
+            return new DownloadResponse(filename,extension,presignedUrl);
+        } catch (Exception e) {
             throw new RuntimeException("Error generating presigned URL", e);
         }
     }
@@ -47,7 +56,7 @@ public class S3DownloadService {
         try {
             HeadObjectRequest headObjectRequest = HeadObjectRequest.builder()
                     .bucket(bucketName)
-                    .key(key+".pdf")
+                    .key(key)
                     .build();
             s3Client.headObject(headObjectRequest);
             return true;

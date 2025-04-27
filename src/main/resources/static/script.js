@@ -7,84 +7,95 @@ async function uploadFile() {
         return;
     }
 
-     try {
-            // Step 1: Get Pre-Signed URL from Backend
-            const response = await fetch("/upload", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
+    try {
+        const formData = new FormData();
+        formData.append("file", file);
 
-            if (!response.ok) {
-                throw new Error(`Failed to get presigned URL: ${response.status}`);
-            }
+        const response = await fetch("/upload", {
+            method: "POST",
+            body: formData
+        });
 
-            const presignedUrl = await response.text();
-
-            // Step 2: Upload file to S3 using the Pre-Signed URL
-            const uploadResponse = await fetch(presignedUrl, {
-                method: "PUT",
-                body: file,
-                headers: {
-                    "Content-Type": "application/pdf"
-                }
-            });
-
-            if (!uploadResponse.ok) {
-                throw new Error(`Upload failed: ${uploadResponse.status}`);
-            }
-
-            alert("File uploaded successfully!");
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Error: " + error.message);
+        if (!response.ok) {
+            throw new Error(`Failed to get presigned URL: ${response.status}`);
         }
+
+        const data = await response.json();
+        const presignedUrl = data.url;
+        const pin = data.pin;
+
+        const uploadResponse = await fetch(presignedUrl, {
+            method: "PUT",
+            body: file,
+            headers: {
+                "Content-Type": file.type
+            }
+        });
+
+        if (!uploadResponse.ok) {
+            throw new Error(`Upload failed: ${uploadResponse.status}`);
+        }
+
+        document.getElementById("generatedPin").innerText = `Your PIN: ${pin}`;
+        alert("File uploaded successfully!");
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
 }
 
 function getPin() {
-            const inputs = document.querySelectorAll(".pin-input input");
-            let pin = "";
-            inputs.forEach(input => pin += input.value);
-            return pin;
+    const inputs = document.querySelectorAll(".pin-input input");
+    let pin = "";
+    inputs.forEach(input => pin += input.value);
+    return pin;
 }
 
-function downloadFile() {
-    const key = getPin();
-
-    if (!key || key.length !== 4) {
-        alert("Please enter a valid key.");
-        return;
+async function downloadFile(event) {
+    if (event) {
+        event.preventDefault();
     }
 
-    // Make a GET request to the Spring Boot backend
-    const url = `/download?key=${key}`;
+    try {
+        const pin = getPin();
 
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Please enter a valid key");
-            }
-            return response.blob();
-        })
-        .then(blob => {
-            // Create a temporary URL for the blob
-            const downloadUrl = window.URL.createObjectURL(blob);
+        if (!pin || pin.length !== 4) {
+            alert("Please enter a valid 4-digit pin.");
+            return;
+        }
 
-            // Create a temporary link element
-            const downloadLink = document.createElement('a');
-            downloadLink.href = downloadUrl;
-            downloadLink.download = `${key}.pdf`; // Set the download filename
+        const response = await fetch(`/download?key=${pin}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-            // Append to document, click, and remove
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error("Response is not JSON");
+        }
 
-            // Clean up the temporary URL
-            window.URL.revokeObjectURL(downloadUrl);
-        })
-        .catch(error => {
-            alert(error.message);
-        });
+        const downloadResponse = await response.json();
+        const { filename, extension, url: presignedUrl } = downloadResponse;
+        if (!filename || !extension || !presignedUrl) {
+            throw new Error("Invalid response data: missing filename, extension, or url.");
+        }
+
+        const fileResponse = await fetch(presignedUrl);
+        if (!fileResponse.ok) {
+            throw new Error(`File fetch failed: ${fileResponse.status}`);
+        }
+
+        const blob = await fileResponse.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = downloadUrl;
+        downloadLink.download = `${filename}.${extension}`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+    }
 }
+
+document.getElementById('downloadButton').addEventListener('click', downloadFile);
