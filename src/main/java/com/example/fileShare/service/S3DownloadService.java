@@ -46,6 +46,7 @@ public class S3DownloadService {
             FileData fileData = fileDataRepository.findByPin(Long.parseLong(key));
             String filename = fileData.getFilename();
             String extension = fileData.getExtension();
+            int count = fileData.getCount();
             return new DownloadResponse(filename,extension,presignedUrl);
         } catch (Exception e) {
             throw new RuntimeException("Error generating presigned URL", e);
