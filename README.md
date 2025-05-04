@@ -1,5 +1,5 @@
-<h1 align="center">
-  <img src="assests/Zippy.png" alt="Logo" width="140"/>
+<h1 align="center" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+  <img src="assests/Zippy.png" alt="Logo" width="130" style="vertical-align: middle;"/>
   Zippy - Cloud Based File Sharing
 </h1>
 
