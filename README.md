@@ -1,7 +1,12 @@
-<h1 align="center" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-  <img src="assests/Zippy.png" alt="Logo" width="130" style="vertical-align: middle;"/>
-  Zippy - Cloud Based File Sharing
-</h1>
+<p align="center">
+  <table>
+    <tr>
+      <td><img src="assests/Zippy.png" alt="Logo" width="50"/></td>
+      <td><h1>Zippy - Cloud Based File Sharing</h1></td>
+    </tr>
+  </table>
+</p>
+
 
 
 A simple and secure anonymous file-sharing platform where users can upload files without login, and share them via a 4-digit PIN. Designed to be lightweight and privacy-focused.
