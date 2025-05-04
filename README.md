@@ -27,3 +27,27 @@ A simple and secure anonymous file-sharing platform where users can upload files
 - **Storage**: Amazon S3
 - **Hosting**: Amazon EC2
 - **Scheduler**: Amazon Lambda
+
+---
+
+## 📤 Upload Workflow
+
+1. User uploads a file via the `/upload` API.
+2. Server:
+   - Provides a **pre-signed URL** to securely upload the file directly to S3
+   - Generates a unique 4-digit PIN
+   - Stores metadata in RDS (including the S3 key and download limit)
+3. User uploads the file using the pre-signed URL
+4. The PIN is returned to the user for sharing
+
+---
+
+## 📥 Download Workflow
+
+1. User enters the 4-digit PIN at the `/download` API
+2. Server:
+   - Validates the PIN and checks if the file exists and download count > 0
+   - Generates a **pre-signed URL** for the file download
+   - Decrements the download count in RDS
+3. User receives the pre-signed URL and downloads the file directly from S3
+4. If download count reaches 0, the file becomes inaccessible
