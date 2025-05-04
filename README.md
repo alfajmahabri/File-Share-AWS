@@ -8,7 +8,7 @@
 
 A simple and secure anonymous file-sharing platform where users can upload files without login, and share them via a 4-digit PIN. Designed to be lightweight and privacy-focused.
 
-![Promo](assests/Zippy with Tagline.png)
+<img src="assests/Zippy with Tagline.png" alt="Logo"/>
 
 ---
 
