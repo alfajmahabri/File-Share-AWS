@@ -1,4 +1,8 @@
-# Zippy - Cloud Based File Sharing ![Architecture Diagram](assests/Zippy.png)
+<h1 align="center">
+  Zippy - Cloud Based File Sharing
+  <img src="assets/Zippy.png" alt="Logo" width="60"/>
+</h1>
+
 
 A simple and secure anonymous file-sharing platform where users can upload files without login, and share them via a 4-digit PIN. Designed to be lightweight and privacy-focused.
 
