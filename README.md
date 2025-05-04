@@ -1,15 +1,14 @@
-<p align="center">
-  <table>
-    <tr>
-      <td><img src="assests/Zippy.png" alt="Logo" width="50"/></td>
-      <td><h1>Zippy - Cloud Based File Sharing</h1></td>
-    </tr>
-  </table>
-</p>
+<h1 align="center">
+  <img src="assests/Zippy.png" alt="Logo" width="130"/>
+  Zippy - Cloud Based File Sharing
+</h1>
+
 
 
 
 A simple and secure anonymous file-sharing platform where users can upload files without login, and share them via a 4-digit PIN. Designed to be lightweight and privacy-focused.
+
+![Promo](assests/Zippy with Tagline.png)
 
 ---
 
