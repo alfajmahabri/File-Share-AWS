@@ -1,6 +1,6 @@
 <h1 align="center">
+  <img src="assests/Zippy.png" alt="Logo" width="140"/>
   Zippy - Cloud Based File Sharing
-  <img src="assests/Zippy.png" alt="Logo" width="60"/>
 </h1>
 
 
