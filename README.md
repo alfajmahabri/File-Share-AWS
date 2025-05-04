@@ -16,7 +16,7 @@ A simple and secure anonymous file-sharing platform where users can upload files
 ---
 
 ## 📐 Architecture Overview
-
+![Architecture Diagram](assets/architecture.png)
 ---
 
 ## 🛠️ Tech Stack
