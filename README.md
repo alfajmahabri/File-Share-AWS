@@ -16,3 +16,14 @@ A simple and secure anonymous file-sharing platform where users can upload files
 ---
 
 ## 📐 Architecture Overview
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Simple HTML , CSS & Js
+- **Backend**: Java (Spring Boot)
+- **Database**: Amazon RDS (MySQL)
+- **Storage**: Amazon S3
+- **Hosting**: Amazon EC2
+- **Scheduler**: Amazon Lambda
